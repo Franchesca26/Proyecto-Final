@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Proyecto_final_FProgramacion
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MontoPrestamo Prestamo = new MontoPrestamo();
+            
+            PlazoMeses Tiempo = new PlazoMeses();
+
+            PorcentajeInteres interes = new PorcentajeInteres();
+            interes = new PorcentajeInteres();
+            float PrestamoTotal ;
+            float Cuotas ;
+            float Capital ;
+            float interes_pagado ;
+            float interes_mensual;
+            int Plazo ;
+            float pago;
+            int fila = 1;
+
+            
+
+            Console.Write("Introduce el monto del prestamo: ");
+            Prestamo.Monto = float.Parse(Console.ReadLine());
+            Console.Write("Introduce la tasa de interes anual: ");
+            interes.Porcentaje = float.Parse(Console.ReadLine());
+            Console.Write("Introduce el plazo en meses: ");
+            Tiempo.Plazo = int.Parse(Console.ReadLine());
+
+            //Calculo del interes mensual
+            interes_mensual = (interes.Porcentaje / 100) / 12;
+
+
+            //Calculo de la cuota mensual
+            pago = interes_mensual + 1;
+            pago = (float)Math.Pow(pago, Tiempo.Plazo);
+            pago = pago - 1;
+            pago = interes_mensual / pago;
+            pago = interes_mensual + pago;
+            pago = Prestamo.Monto * pago;
+
+
+
+
+            Console.WriteLine();
+            fila = 1;
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write(" Numero de pago \t");
+            Console.Write("Pago \t\t");
+            Console.Write("Intereses Pagados \t\t");
+            Console.Write("Capital Pagado \t\t");
+            Console.Write("Monto del prestamo \t");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("\t0");
+            Console.WriteLine("\t\t\t\t\t\t\t\t\t\t\t{0}", Prestamo.Monto);
+
+
+            for (int i = 1; i <= Tiempo.Plazo; i++)
+            {
+
+
+                Console.Write("\t{0}\t\t", fila);
+
+
+                Console.Write("{0}\t", pago);
+
+
+                interes_pagado = interes_mensual * Prestamo.Monto;
+                Console.Write("{0}\t\t", interes_pagado);
+
+
+                Capital = pago - interes_pagado;
+                Console.Write("\t{0}\t", Capital);
+
+
+                Prestamo.Monto = Prestamo.Monto - Capital;
+                Console.Write("\t{0}\t", Prestamo.Monto);
+
+                fila = fila + 1;
+                Console.WriteLine();
+
+            }
+                Console.ReadLine();
+
+        }
+    }
+}
